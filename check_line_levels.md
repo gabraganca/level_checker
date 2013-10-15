@@ -15,9 +15,7 @@ This recipe explains how to check if the level of a spectral line is correct.
    For example, let's identify the Si IV line at 4654.312 angstrons. The line
    on the `fort.12` file refferring to this spectral line is:
 
-   ```
-   12     37  4654.312   Si  IV   -0.52  293837.914   1.15E-02     0.7    . **1402 1408**   32
-   ```
+   >12     37  4654.312   Si  IV   -0.52  293837.914   1.15E-02     0.7    . **1402 1408**   32
 
    The values that we want are in boldface.
 
@@ -31,9 +29,7 @@ This recipe explains how to check if the level of a spectral line is correct.
 
    For our example, we have:
 
-   ```
-   27  Si 4  **1390**  1442  1443     4     0    16      0.000D+00
-   ```
+   >27  Si 4  **1390**  1442  1443     4     0    16      0.000D+00
 
 4. Subtract the level indifications found on (2) and (3).
 
@@ -54,13 +50,12 @@ This recipe explains how to check if the level of a spectral line is correct.
    If we go back to the example, we will look into the file
    `atdata\Si4_53lev.dat` and obtain the 13th and the 19th level:
 
-   ```
-   2.10615573E+15     18.    5  **'SiIV 2Ge 1'**  0   0.  -105
-   1.46223047E+15     22.    6  **'SiIV 2Ho 1'**  0   0.  -105
-   ```
+   >2.10615573E+15     18.    5  **'SiIV 2Ge 1'**  0   0.  -105
+   
+   >1.46223047E+15     22.    6  **'SiIV 2Ho 1'**  0   0.  -105
 
    And the levels are showed in boldface, i.e., the lower level is
    `Si IV 2Ge 1` and the upper level is `SiIV 2Ho 1`.
 
-6. Go to NIST or look for a table of eletronci trasnsistions and check if the
-   wavelength of this line is correct.
+6. Go to NIST or look for a table of eletronic trasnsitions and check if the
+   wavelength of the desired line is correct.
