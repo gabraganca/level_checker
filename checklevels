@@ -172,7 +172,8 @@ def main(wave, chem_element, ion):
 
     try:
         ptrn = chem_element.lower()+ion+'*'
-        atomic_data = open(find(ptrn, '.')[0]).read().split('\n')
+        atomic_data_file = find(ptrn, '.')[0]
+        atomic_data = open(atomic_data_file).read().split('\n')
     except TypeError:
         raise IOError('There is no atomica data for this element and/or ' + \
                       'this ionization stage.')
@@ -180,7 +181,8 @@ def main(wave, chem_element, ion):
     real_lower_level = atomic_data[lower_level].split("'")[1]
     real_upper_level = atomic_data[upper_level].split("'")[1]
 
-    print 'The eletronic levels are:\n\n' +\
+    print 'The atomic data file is {}\n\n'.format(atomic_data_file) + \
+          'The eletronic levels are:\n\n' +\
           'Lower level: {}\n'.format(real_lower_level) + \
           'Upper level: {}'.format(real_upper_level)
 
