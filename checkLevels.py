@@ -66,13 +66,30 @@ This recipe explains how to check if the level of a spectral line is correct.
 import sys
 import os
 import re
+import fnmatch
 
 
-def find(name, path):
-    # find a file
+def find(pattern, path):
+    # Looks for files that match a pattern
+    result = []
     for root, dirs, files in os.walk(path):
-        if name in files:
-            return os.path.join(root, name)
+        for name in files:
+            if fnmatch.fnmatch(name, pattern):
+                result.append(os.path.join(root, name))
+    return result
+
+
+def int2roman(number):
+    # Convert arabic number to roman.
+    numerals = { 1 : "I", 4 : "IV", 5 : "V", 9 : "IX", 10 : "X", 40 : "XL",
+                 50 : "L", 90 : "XC", 100 : "C", 400 : "CD", 500 : "D",
+                 900 : "CM", 1000 : "M" }
+    result = ""
+    for value, numeral in sorted(numerals.items(), reverse=True):
+        while number >= value:
+            result += numeral
+            number -= value
+    return result
 
 
 def main(wave, chem_element, ion):
@@ -87,36 +104,45 @@ def main(wave, chem_element, ion):
         Chemical element,
 
     ion: str;
-        Ionization stage in Roman numerals.
+        Ionization stage in Arabic numerals.
     """
 
     print 'Step #2\n'
 
     # Check if fort.12 is available. If it is, load it.
-    fort12 = find('fort.12', '.')
-
     try:
-        fort12 = open(fort12).read()
+        fort12 = open(find('fort.12', '.')[0]).read()
     except TypeError:
         raise IOError('File fort.12 is not available. Plese run synplot to ' + \
                       'generate it.')
 
-    ptrn ='(' + str(wave) + '\.\d{3}).*(' + chem_element + ')\s{2,3}(' + ion + \
-         ').*\s(\d+\s+\d+)\s{3}\d{2}\n'
+    ptrn ='(' + str(wave) + '\.\d{3}).*(' + chem_element + ')\s{2,3}(' + \
+            int2roman(int(ion)) + ').*\s(\d+\s+\d+)\s{3}\d{2}\n'
 
     if re.search(ptrn, fort12):
-        full_wave, chem, ioni, levels =  re.findall(ptrn, fort12)[0]
+        full_wave, chem, roman_ion, levels =  re.findall(ptrn, fort12)[0]
         #split levels
         levels = levels.split()
 
-        print 'In fort.12,' + \
-              'we found that the levels for {} {}'.format(chem, ioni) +\
+        print 'In fort.12, ' + \
+              'we found that the levels for {} {}'.format(chem, roman_ion) +\
               ' at wavelength {}:\n\n'.format(full_wave) + \
               'lower level: {} \nupper level: {}'.format(levels[0], levels[1])
     else:
         raise IOError('There is no such line insie the fort.12 file.\n' + \
                       'Please, synthesize a spectrum with the desired ' + \
                       'spectral line.')
+
+    print '\n\nStep #3\n'
+
+    # Look for Tlusty output with termination .6
+    try:
+        dot6 = open(find('*.6', '.')[0]).read()
+    except TypeError:
+        raise IOError('There is no Tlusty output file with `.6` ' + \
+                      'termination.\nPlease, obtain one.')
+
+
 
 if __name__ == '__main__':
 
@@ -125,7 +151,7 @@ if __name__ == '__main__':
         print '\nUsage\n-----\n\n'+\
               'checkLevels wavelength chemical_element ionization_stage\n\n' + \
               'For our little example, we can use:\n\n' + \
-              'checkLevels 4654 Si IV'
+              'checkLevels 4654 Si 4'
     WAVE = int(sys.argv[1])
     CHEM_ELEMENT = sys.argv[2]
     ION = sys.argv[3]
