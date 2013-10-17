@@ -122,14 +122,15 @@ def main(wave, chem_element, ion):
     if re.search(ptrn, fort12):
         full_wave, chem, roman_ion, levels =  re.findall(ptrn, fort12)[0]
         #split levels
-        levels = levels.split()
+        fort12_l_level, fort12_u_level = levels.split()
 
         print 'In fort.12, ' + \
               'we found that the levels for {} {}'.format(chem, roman_ion) +\
               ' at wavelength {}:\n\n'.format(full_wave) + \
-              'lower level: {} \nupper level: {}'.format(levels[0], levels[1])
+              'lower level: {} \nupper level: {}'.format(fort12_l_level,
+                                                         fort12_u_level)
     else:
-        raise IOError('There is no such line insie the fort.12 file.\n' + \
+        raise IOError('There is no such line inside the fort.12 file.\n' + \
                       'Please, synthesize a spectrum with the desired ' + \
                       'spectral line.')
 
@@ -137,11 +138,26 @@ def main(wave, chem_element, ion):
 
     # Look for Tlusty output with termination .6
     try:
-        dot6 = open(find('*.6', '.')[0]).read()
+        dot6_fname = find('*.6', '.')[0]
+        dot6 = open(dot6_fname).read()
     except TypeError:
         raise IOError('There is no Tlusty output file with `.6` ' + \
                       'termination.\nPlease, obtain one.')
 
+    ptrn = '(' + chem_element + ')\s(' + str(ion) +')\s+(\d+)\s+(\d+)'
+
+    if re.search(ptrn, dot6):
+        chem, ion, dot6_l_level, dot6_u_level =  re.findall(ptrn, dot6)[0]
+        #split levels
+        levels = levels.split()
+
+        print 'In {}, '.format(dot6_fname) + \
+              'we found that the levels for {} {}:\n\n'.format(chem, ion) +\
+              'lower level: {} \nupper level: {}'.format(dot6_l_level,
+                                                         dot6_u_level)
+    else:
+        raise IOError('There is no such line element and/or ionization ' + \
+                      'stage at the Tlusty file.')
 
 
 if __name__ == '__main__':
