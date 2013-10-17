@@ -156,6 +156,17 @@ def main(wave, chem_element, ion):
         raise IOError('There is no such line element and/or ionization ' + \
                       'stage at the Tlusty file.')
 
+    print '\nStep #4\n\n'
+
+    lower_level = int(fort12_l_level) - int(dot6_l_level) + 1
+    upper_level = int(fort12_u_level) - int(dot6_l_level) + 1
+
+    print 'The ion upper and lowe level are:\n\n' + \
+          'Lower level: {} - {} = {}\n'.format(fort12_l_level, dot6_l_level, \
+                                              lower_level) +\
+          'Upper level: {} - {} = {}\n'.format(fort12_u_level, dot6_l_level, \
+                                              upper_level)
+
 
 if __name__ == '__main__':
 
