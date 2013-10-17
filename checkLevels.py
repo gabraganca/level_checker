@@ -1,3 +1,4 @@
+#!/usr/bin/python
 '''
 Check Line Levels
 =================
@@ -197,10 +198,5 @@ if __name__ == '__main__':
     WAVE = int(sys.argv[1])
     CHEM_ELEMENT = sys.argv[2]
     ION = sys.argv[3]
-#    WEND = float(sys.argv[4])
-#    if len(sys.argv) == 6:
-#        SPATH = sys.argv[5] # Synplot path
-#    else:
-#        SPATH = None
-#
-#    main(V_PARAM, VALUES, WSTART, WEND, SPATH)
+
+    main(WAVE, CHEM_ELEMENT, ION)
