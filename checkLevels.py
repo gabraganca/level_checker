@@ -64,13 +64,23 @@ This recipe explains how to check if the level of a spectral line is correct.
 '''
 
 import sys
+import os
+import re
+
+
+def find(name, path):
+    # find a file
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            return os.path.join(root, name)
+
 
 def main(wave, chem_element, ion):
     """
     Parameters
     ----------
 
-    wave: int;
+    wave: str;
         Central wavelength as an integer.
 
     chem_element: str;
@@ -80,6 +90,33 @@ def main(wave, chem_element, ion):
         Ionization stage in Roman numerals.
     """
 
+    print 'Step #2\n'
+
+    # Check if fort.12 is available. If it is, load it.
+    fort12 = find('fort.12', '.')
+
+    try:
+        fort12 = open(fort12).read()
+    except TypeError:
+        raise IOError('File fort.12 is not available. Plese run synplot to ' + \
+                      'generate it.')
+
+    ptrn ='(' + str(wave) + '\.\d{3}).*(' + chem_element + ')\s{2,3}(' + ion + \
+         ').*\s(\d+\s+\d+)\s{3}\d{2}\n'
+
+    if re.search(ptrn, fort12):
+        full_wave, chem, ioni, levels =  re.findall(ptrn, fort12)[0]
+        #split levels
+        levels = levels.split()
+
+        print 'In fort.12,' + \
+              'we found that the levels for {} {}'.format(chem, ioni) +\
+              ' at wavelength {}:\n\n'.format(full_wave) + \
+              'lower level: {} \nupper level: {}'.format(levels[0], levels[1])
+    else:
+        raise IOError('There is no such line insie the fort.12 file.\n' + \
+                      'Please, synthesize a spectrum with the desired ' + \
+                      'spectral line.')
 
 if __name__ == '__main__':
 
@@ -89,9 +126,9 @@ if __name__ == '__main__':
               'checkLevels wavelength chemical_element ionization_stage\n\n' + \
               'For our little example, we can use:\n\n' + \
               'checkLevels 4654 Si IV'
-#    V_PARAM = sys.argv[1]
-#    VALUES = map(float, re.findall('\-?\d+(?:\.\d+)*', sys.argv[2]))
-#    WSTART = float(sys.argv[3])
+    WAVE = int(sys.argv[1])
+    CHEM_ELEMENT = sys.argv[2]
+    ION = sys.argv[3]
 #    WEND = float(sys.argv[4])
 #    if len(sys.argv) == 6:
 #        SPATH = sys.argv[5] # Synplot path
