@@ -195,8 +195,9 @@ if __name__ == '__main__':
               'checkLevels wavelength chemical_element ionization_stage\n\n' + \
               'For our little example, we can use:\n\n' + \
               'checkLevels 4654 Si 4'
-    WAVE = int(sys.argv[1])
-    CHEM_ELEMENT = sys.argv[2]
-    ION = sys.argv[3]
-
-    main(WAVE, CHEM_ELEMENT, ION)
+    else:   
+        WAVE = int(sys.argv[1])
+        CHEM_ELEMENT = sys.argv[2]
+        ION = sys.argv[3]
+    
+        main(WAVE, CHEM_ELEMENT, ION)
