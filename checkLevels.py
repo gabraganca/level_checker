@@ -45,7 +45,7 @@ This recipe explains how to check if the level of a spectral line is correct.
    Note that the lower level identification has to be included.
 
 5. With thw lower and upper level indefied, open the file containing the
-   atomica data for the chemical element and ionization stage desired.
+   atomic data for the chemical element and ionization stage desired.
    It should be in a folder called `atdata`. In this file, the level are in
    ascending order.
 
@@ -166,6 +166,24 @@ def main(wave, chem_element, ion):
                                               lower_level) +\
           'Upper level: {} - {} = {}\n'.format(fort12_u_level, dot6_l_level, \
                                               upper_level)
+
+    print '\nStep #5\n\n'
+
+    try:
+        ptrn = chem_element.lower()+ion+'*'
+        atomic_data = open(find(ptrn, '.')[0]).read().split('\n')
+    except TypeError:
+        raise IOError('There is no atomica data for this element and/or ' + \
+                      'this ionization stage.')
+
+    real_lower_level = atomic_data[lower_level].split("'")[1]
+    real_upper_level = atomic_data[upper_level].split("'")[1]
+
+    print 'The eletronic levels are:\n\n' +\
+          'Lower level: {}\n'.format(real_lower_level) + \
+          'Upper level: {}'.format(real_upper_level)
+
+    return real_lower_level, real_upper_level
 
 
 if __name__ == '__main__':
