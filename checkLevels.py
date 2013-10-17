@@ -144,17 +144,14 @@ def main(wave, chem_element, ion):
         raise IOError('There is no Tlusty output file with `.6` ' + \
                       'termination.\nPlease, obtain one.')
 
-    ptrn = '(' + chem_element + ')\s(' + str(ion) +')\s+(\d+)\s+(\d+)'
+    ptrn = '(' + chem_element + ')\s(' + str(ion) +')\s+(\d+)\s'
 
     if re.search(ptrn, dot6):
-        chem, ion, dot6_l_level, dot6_u_level =  re.findall(ptrn, dot6)[0]
-        #split levels
-        levels = levels.split()
+        chem, ion, dot6_l_level =  re.findall(ptrn, dot6)[0]
 
         print 'In {}, '.format(dot6_fname) + \
               'we found that the levels for {} {}:\n\n'.format(chem, ion) +\
-              'lower level: {} \nupper level: {}'.format(dot6_l_level,
-                                                         dot6_u_level)
+              'lower level: {}'.format(dot6_l_level)
     else:
         raise IOError('There is no such line element and/or ionization ' + \
                       'stage at the Tlusty file.')
