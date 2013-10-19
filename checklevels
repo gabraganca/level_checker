@@ -93,19 +93,19 @@ def int2roman(number):
     return result
 
 
-def main(wave, chem_element, ion):
+def main(chem_element, ion, wave):
     """
     Parameters
     ----------
-
-    wave: str;
-        Central wavelength as an integer.
 
     chem_element: str;
         Chemical element,
 
     ion: str;
         Ionization stage in Arabic numerals.
+
+    wave: str;
+        Central wavelength as an integer.
     """
 
     print 'Step #2\n'
@@ -196,10 +196,10 @@ if __name__ == '__main__':
         print '\nUsage\n-----\n\n'+\
               'checkLevels wavelength chemical_element ionization_stage\n\n' + \
               'For our little example, we can use:\n\n' + \
-              'checkLevels 4654 Si 4'
+              'checkLevels Si 4 4654'
     else:   
-        WAVE = int(sys.argv[1])
-        CHEM_ELEMENT = sys.argv[2]
-        ION = sys.argv[3]
+        CHEM_ELEMENT = sys.argv[1]
+        ION = sys.argv[2]
+        WAVE = int(sys.argv[3])
     
-        main(WAVE, CHEM_ELEMENT, ION)
+        main(CHEM_ELEMENT, ION, WAVE)
