@@ -104,8 +104,8 @@ def main(chem_element, ion, wave, verbose=False):
     ion: str;
         Ionization stage in Arabic numerals.
 
-    wave: str;
-        Central wavelength as an integer.
+    wave: float, str;
+        Central wavelength.
 
     verbose: bool;
         If True, print log.
@@ -122,8 +122,8 @@ def main(chem_element, ion, wave, verbose=False):
         raise IOError('File fort.12 is not available. Plese run synplot to ' + \
                       'generate it.')
 
-    ptrn ='(' + str(wave) + '\.\d{3}).*(' + chem_element + ')\s{2,3}(' + \
-            int2roman(int(ion)) + ').*\s(\d+\s+\d+)\s{3}\d{2}\n'
+    ptrn ='(' + str(wave) + '(?:\.\d{3}|\d*)).*(' + chem_element + ')\s{2,3}('+\
+           int2roman(int(ion)) + ').*\s(\d+\s+\d+)\s{3}\d{2}\n'
 
     if re.search(ptrn, fort12):
         full_wave, chem, roman_ion, levels =  re.findall(ptrn, fort12)[0]
@@ -238,6 +238,10 @@ if __name__ == '__main__':
     else:   
         CHEM_ELEMENT = sys.argv[1]
         ION = sys.argv[2]
-        WAVE = int(sys.argv[3])
-    
+        WAVE = sys.argv[3]
+        if re.search('\.', WAVE):
+            WAVE  = float(WAVE)
+        else:
+            WAVE = int(WAVE)
+
         main(CHEM_ELEMENT, ION, WAVE, True)
