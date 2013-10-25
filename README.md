@@ -1,4 +1,4 @@
-# Level Checker
+# Synspec Level Checker
 
 ## Introduction
 
