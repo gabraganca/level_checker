@@ -1,4 +1,4 @@
-### Level Checker
+# Level Checker
 
 ## Introduction
 
