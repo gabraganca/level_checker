@@ -67,7 +67,6 @@ This recipe explains how to check if the level of a spectral line is correct.
 import sys
 import os
 import re
-import fnmatch
 import levelchecker as lc
 
 HOME = os.getenv('HOME') 
@@ -91,7 +90,7 @@ elif len(sys.argv) == 3:
     ATOM = str(PERIODIC[CHEM_ELEMENT])
 
     # open line list
-    fort19 = open(find('fort.19', '.')[0]).read()
+    fort19 = open(lc.find('fort.19', SPATH)[0]).read()
 
     # Pattern to get the wavelengths from the line list.
     #Only the weavelength ofr the chemical element and ionization stage are 
