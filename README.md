@@ -78,9 +78,57 @@ This recipe explains how to check if the level of a spectral line is correct.
    that it is the the second level with this term ( '2 Se' for the lower
    level and '2Po' for the upper term.
 
-6. Go to NIST or look for a table of eletronic transitions and check if the
-   wavelength of the desired line is correct.
+6. Go to [NIST](http://www.nist.gov/) or look for a table of eletronic 
+   transitions and check if the wavelength of the desired line is correct.
 
+   The NIST pages to go are the 
+   [Lines Form](http://physics.nist.gov/PhysRefData/ASD/lines_form.html)
+   and the 
+   [Levels Form](http://physics.nist.gov/PhysRefData/ASD/levels_form.html).
+   
+   On the Lines Form fill the chemical element plus ionization stage and 
+   the wavelength range and then press retrieve. For our example, we have: 
+   ```
+   ---------------------------------------------------------------------------------------------------------------------------------------------------------
+    Observed  |      Ritz    |  Rel. |    Aki    | Acc. |      Ei           Ek      |     Lower level     |     Upper level     |Type|    TP  |   Line  |
+   Wavelength |   Wavelength |  Int. |    s^-1   |      |    (cm-1)       (cm-1)    |---------------------|---------------------|    |   Ref. |   Ref.  |
+    Air  (Å)  |    Air  (Å)  |  (?)  |           |      |                           | Conf.  | Term | J   | Conf.  | Term | J   |    |        |         |
+   ---------------------------------------------------------------------------------------------------------------------------------------------------------
+              |              |       |           |      |                           |        |      |     |        |      |     |    |        |         |
+     4116.10  |     4116.103 |     9 | 1.53e+08  | A+   | 193978.89   -  218266.86  | 2p6.4s | 2S   | 1/2 | 2p6.4p | 2P*  | 1/2 |    |    c33 |  L6098  |
+   ---------------------------------------------------------------------------------------------------------------------------------------------------------
+   ```
+   
+   And we can see that the lower level is `2p6.4s 2S` and the upper level is 
+   `2p6.4p 2P*`, where `*` means 'odd'.
+   
+   On the Levels Form, fill the chemical element and ionization stage and retrieve 
+   the data. For our example we have:
+   ```
+   ---------------------------------------------------------------------
+   Configuration    | Term   |    J |              Level    | Reference
+   -----------------|--------|------|-----------------------|-----------
+                     |        |      |                       |           
+   2p6.3s           | 2S     |  1/2 |               0.00    |     L5815
+                     |        |      |                       |           
+   2p6.3p           | 2P*    |  1/2 |           71287.54    |          
+                     |        |  3/2 |           71748.64    |          
+                     |        |      |                       |           
+   2p6.3d           | 2D     |  5/2 |          160374.41    |          
+                     |        |  3/2 |          160375.60    |          
+                     |        |      |                       |           
+   2p6.4s           | 2S     |  1/2 |          193978.89    |          
+                     |        |      |                       |           
+   2p6.4p           | 2P*    |  1/2 |          218266.86    |          
+                     |        |  3/2 |          218428.67    |          
+   ...
+   ```
+   
+   For the lower level we had obtained `2Se 2`, which is the second configuration 
+   with the term `2Se` and we see from the above table that it is `2p6.45 2S`, 
+   in accordance with what we got on the Lines Form. The same line of thought 
+   can be made for the upper level. Thus, we can see that both levels are correct.
+   
 
 ## Installation
 
