@@ -75,7 +75,7 @@ This recipe explains how to check if the level of a spectral line is correct.
    wavelength of the desired line is correct.
 
 
-## The code
+## Usage
 
 The is two ways to run the code: as a script or as a python package. If you
 are using it as a script, just typing `./levelchecker` will print the
