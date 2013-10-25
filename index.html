@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Synspec Level Checker : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Synspec Level Checker</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/gabraganca/level_checker">View on GitHub</a>
+
+          <h1 id="project_title">Synspec Level Checker</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/gabraganca/level_checker/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/gabraganca/level_checker/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p><code>Level Checker</code> is a tool for identifying eletronic transition levels of the
+atomic data used by
+<a href="http://nova.astro.umd.edu/Synspec43/synspec.html"><code>Synspec</code></a>.</p>
+
+<p><code>Synspec</code> does a automatic identification of the levels, but sometimes it can
+get one level wrong. Usually, this happens when the energy levels of the right
+and the wrong levels are too similar.</p>
+
+<p>The routine does not check if the levels are correct, it just returns the
+levels. To see hot to verify the levels, please read the
+<a href="METHODOLOGY.md">Methodoloy</a>.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>To install it, you will need to have <a href="http://git-scm.com/"><code>git</code></a> installed in
+your machine. If you already have it, first clone it:</p>
+
+<pre><code>git clone git@github.com:gabraganca/level_checker.git
+</code></pre>
+
+<p>And the install it. There are two ways. I recommend using the second one because
+you can upgrade and uninstall it easily.</p>
+
+<ol>
+<li>
+<p>Using only python:</p>
+
+<pre><code>python setup.py install
+</code></pre>
+</li>
+<li>
+<p>Using <a href="https://pypi.python.org/pypi/pip"><code>pip</code></a>:</p>
+
+<pre><code>python setup.py build
+pip install .
+</code></pre>
+</li>
+</ol><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The is two ways to run the code: as a script or as a python package. If you
+are using it as a script, just typing <code>levelchecker</code> will print the
+documentation help. For the example explained in the
+<a href="METHODOLOGY.md">Methodolgy</a> file, you can type:</p>
+
+<pre><code>levelchecker Si 4 4116.104
+</code></pre>
+
+<p>And it will print all the information explained above.</p>
+
+<p>If you want all levels you cant type without the specific wavelength, i.e.:</p>
+
+<pre><code>levelchecker Si 4
+</code></pre>
+
+<p>To use it as a python package simply import it:</p>
+
+<div class="highlight highlight-python"><pre><span class="kn">import</span> <span class="nn">levelchecker</span>
+
+<span class="n">levelchecker</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="s">'Si'</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">4116.104</span><span class="p">,</span> <span class="n">synspec_root_dir</span><span class="p">)</span>
+</pre></div>
+
+<p>where you have to specify which is the <code>Synspec</code> root directory. For example,
+if your synplot folder is set up like this:</p>
+
+<pre><code>/home/user/synplot
+├── atdata
+├── bstar
+│   └── bstar2013B
+└── synplot
+</code></pre>
+
+<p>You just pass to the code the following:</p>
+
+<div class="highlight highlight-python"><pre><span class="n">levelchecker</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="s">'Si'</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">4116.104</span><span class="p">,</span> <span class="s">'/home/user/synplot'</span><span class="p">)</span>
+</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Synspec Level Checker maintained by <a href="https://github.com/gabraganca">gabraganca</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-38738176-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
