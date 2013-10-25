@@ -75,6 +75,27 @@ This recipe explains how to check if the level of a spectral line is correct.
    wavelength of the desired line is correct.
 
 
+## Installation
+
+To install it, you will need to have [`git`](http://git-scm.com/) installed in 
+your machine. If you already have it, first clone it:
+
+```
+git clone git@github.com:gabraganca/level_checker.git
+```
+
+And the install it. There are two ways. I recommend using the second one because 
+you can upgrade and uninstall it easily.
+
+1. Using only python:
+ 
+        python setup.py install
+
+2. Using [`pip`](https://pypi.python.org/pypi/pip):
+
+        python setup.py build
+        pip install .
+
 ## Usage
 
 The is two ways to run the code: as a script or as a python package. If you
