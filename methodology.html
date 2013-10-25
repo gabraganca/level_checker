@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Synspec Level Checker : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Synspec Level Checker</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/gabraganca/level_checker">View on GitHub</a>
+
+          <h1 id="project_title">Synspec Level Checker</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/gabraganca/level_checker/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/gabraganca/level_checker/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a name="methodology" class="anchor" href="#methodology"><span class="octicon octicon-link"></span></a>Methodology</h2>
+
+<p>
+This recipe explains how to check if the level of a spectral line is correct.
+</p>
+
+<ol style="list-style-type: decimal">
+    <li><p>Synthesize the line. The parameters are not important. We just want
+           to generate the output files.</p></li>
+
+    <li><p>In the file <code>fort.12</code>, look for the desired spectral line.
+            To find it, you can use the third, fourth and fifth column that are,
+            respectively, the central wavelength, the chemical element and the
+            ionization stage.</p>
+
+        <p>
+        What we need is the number of the lower level (11th column) and the
+        upper level (12th column).
+        </p>
+
+        <p>
+        For example, let's identify the Si IV line at 4116.104 angstrons. The
+        line on the <code>fort.12</code> file refferring to this spectral line
+        is:
+        </p>
+
+        <blockquote>
+        <p>
+        9 5584 4116.104 Si IV -0.11 193978.889 1.19E+00 56.8 ** 1394 1395 31
+        </p>
+        </blockquote>
+        <p>
+        The values that we want are <code>1394</code> and <code>1395</code>.
+        </p>
+    </li>
+
+    <li>For this step, it is needed a output from <code>Tlusty</code> with
+       termination <code>.6</code>.
+       <a href="http://nova.astro.umd.edu/"><code>Tlusty</code></a> is, as
+       advertised by the authors, &quot;A user-oriented package for modeling
+       stellar atmospheres and accretion disks and for stellar spectroscopic
+       diagnostics&quot;. The <code>levelchcker</code> only works if you are
+       using a grid of atmospheric models from <code>Tlusty</code>.
+
+       <p>
+       Open the file <code>.6</code> file and look for the section called
+       <em>EXPLICIT IONS INCLUDED</em>. Here, it has all identification levels
+       used by <code>Synspec</code>. Note that the lower level is for Hydrogen
+       and the following ones will only stacking over one another. Thus, look
+       for the chemical element and ionization stage desired and obtain the
+       values of the lowest level (column N0).
+       </p>
+
+       <p>For our example, we have:</p>
+
+       <blockquote>
+       <p>27 Si 4 <strong>1390</strong> 1442 1443 4 0 16 0.000D+00</p>
+       </blockquote>
+
+       <p>And the needed value is in boldface.</p>
+    </li>
+
+    <li>
+       Subtract the level indifications found on (2) and (3).
+       <p>For our little example, we have:</p>
+       <code>
+       lower level : 1394 - 1390 = 05
+       <p>
+       upper level : 1395 - 1390 = 06
+       </code></p>
+       <p>Note that the lower level identification has to be included.</p>
+    </li>
+
+    <li>
+       With the lower and upper level identified, open the file containing the
+       atomic data for the chemical element and ionization stage desired. It
+       should be in a folder called <code>atdata</code>. In this file, the
+       level are in ascending order.
+
+       <p>
+       If we go back to the example, we will look into the file
+       <code>atdata\Si4_53lev.dat</code> and obtain the 13th and the 19th level:
+       </p>
+       <blockquote>
+       <p>5.09978082E+15 2. 4 <strong>'SiIV 2Se 2'</strong> 0 0. -105</p>
+       </blockquote>
+       <blockquote>
+       <p>4.36843030E+15 6. 4 <strong>'SiIV 2Po 2'</strong> 0 0. -105</p>
+       </blockquote>
+
+      <p>And the levels are showed in boldface, i.e., the lower level is
+      <code>Si IV 2Se 2</code> and the upper level is <code>SiIV 2Po 2</code>.
+      The last term ('2') means that it is the the second level with this term
+      ('2 Se' for the lower level and '2Po' for the upper term).</p>
+    </li>
+
+    <li>
+       Go to <a href="http://www.nist.gov/">NIST</a> or look for a table of
+       eletronic transitions and check if the wavelength of the desired line is
+       correct.
+
+       <p>
+       The NIST pages to go are the
+       <a href="http://physics.nist.gov/PhysRefData/ASD/lines_form.html">Lines Form</a>
+       and the <a href="http://physics.nist.gov/PhysRefData/ASD/levels_form.html">Levels Form</a>.
+       </p>
+
+      <p>
+      On the Lines Form fill the chemical element plus ionization stage and
+      the wavelength range and then press retrieve. For our example, we  can
+      see that the lower level is <code>2p6.4s 2S</code> and the upper level
+      is <code>2p6.4p 2P*</code>, where <code>*</code> means 'odd'.
+      </p>
+
+      <p>
+      On the Levels Form, fill the chemical element and ionization stage and
+      retrieve the data. For the lower level we had obtained <code>2Se 2</code>,
+       which is the second configuration with the term <code>2Se</code> and we
+      see from the Levels Formt table that it is <code>2p6.45 2S</code>, in
+      accordance with what we got on the Lines Form. The same line of thinking
+      can be made for the upper level. Thus, we can see that both levels are
+      correct.
+      </p>
+    </li>
+</ol>
+
+</pre></div>
+      </section>
+    </div>
+
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Synspec Level Checker maintained by <a href="https://github.com/gabraganca">gabraganca</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-38738176-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
