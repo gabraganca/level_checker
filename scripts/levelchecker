@@ -103,7 +103,7 @@ elif len(sys.argv) == 3:
 
     for wave in wavelengths:
         try:
-            lower, upper = main(CHEM_ELEMENT, ION, int(wave))
+            lower, upper = lc.check(CHEM_ELEMENT, ION, wave, SPATH)
             print '{:.2f},{},{}'.format(wave, lower, upper)
         except (IOError, IndexError) as e:
             print '{:.2f},{}'.format(wave, e)
