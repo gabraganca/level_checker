@@ -39,10 +39,11 @@ you can upgrade and uninstall it easily.
 
 The is two ways to run the code: as a script or as a python package. If you
 are using it as a script, just typing `levelchecker` will print the
-documentation help. For the example above, you can type:
+documentation help. For the example explained in the
+[Methodolgy](METHODOLOGY.md) file, you can type:
 
 ```
-levelchecker Si 4 4654.312
+levelchecker Si 4 4116.104
 ```
 
 And it will print all the information explained above.
@@ -58,11 +59,11 @@ To use it as a python package simply import it:
 ```python
 import levelchecker
 
-levelchecker.check('Si', 4, 4654.312, synspec_root_dir)
+levelchecker.check('Si', 4, 4116.104, synspec_root_dir)
 ```
 
-where you have to specify which is the `Synspec` root directory. For example, if you synplot folder
-is set up like this:
+where you have to specify which is the `Synspec` root directory. For example,
+if your synplot folder is set up like this:
 
 ```
 /home/user/synplot
@@ -75,7 +76,7 @@ is set up like this:
 You just pass to the code the following:
 
 ```python
-levelchecker.check('Si', 4, 4654.312, '/home/user/synplot')
+levelchecker.check('Si', 4, 4116.104, '/home/user/synplot')
 ```
 
 
