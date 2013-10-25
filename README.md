@@ -99,11 +99,11 @@ you can upgrade and uninstall it easily.
 ## Usage
 
 The is two ways to run the code: as a script or as a python package. If you
-are using it as a script, just typing `./levelchecker` will print the
+are using it as a script, just typing `levelchecker` will print the
 documentation help. For the example above, you can type:
 
 ```
-./levelchecker Si 4 4654.312
+levelchecker Si 4 4654.312
 ```
 
 And it will print all the information explained above.
@@ -111,7 +111,7 @@ And it will print all the information explained above.
 If you want all levels you cant type without the specific wavelength, i.e.:
 
 ```
-./levelchecker Si 4
+levelchecker Si 4
 ```
 
 To use it as a python package simply import it:
