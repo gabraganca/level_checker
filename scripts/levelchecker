@@ -70,9 +70,10 @@ import re
 import fnmatch
 import levelchecker as lc
 
+HOME = os.getenv('HOME') 
+
 # Find synspec path
-SPATH = os.getenv('HOME') + '/synplot/' 
-print SPATH
+SPATH = HOME + '/synplot/' 
 
 if len(sys.argv) == 1:
     print __doc__
@@ -85,7 +86,7 @@ elif len(sys.argv) == 3:
     ION = sys.argv[2]
     # Load JSON file with chemical elements and atomic number
     import json
-    PERIODIC = json.load(open('chemical_elements.json'))
+    PERIODIC = json.load(open(HOME+'/.levelchecker/chemical_elements.json'))
     # Get atomic number
     ATOM = str(PERIODIC[CHEM_ELEMENT])
 
