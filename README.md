@@ -93,4 +93,30 @@ If you want all levels you cant type without the specific wavelength, i.e.:
 ./levelchecker Si 4
 ```
 
-The option to run as a python package is not functional at this point.
+To use it as a python package simply import it:
+
+```python
+import levelchecker
+
+levelchecker.check('Si', 4, 4654.312, synspec_root_dir)
+```
+
+where you have to specify which is the `Synspec` root directory. For example, if you synplot folder 
+is set up like this:
+
+```
+/home/user/synplot
+├── atdata
+├── bstar
+│   └── bstar2013B
+└── synplot
+```
+
+You just pass to the code the following:
+
+```python
+levelchecker.check('Si', 4, 4654.312, '/home/user/synplot')
+```
+
+
+
