@@ -1,4 +1,16 @@
-### Check Line Levels
+### Level Checker
+
+## Introduction
+
+`Level Checker` is a tool for identifying eletronic transition levels of the
+atomic data used by
+[`Synspec`](http://nova.astro.umd.edu/Synspec43/synspec.html).
+
+`Synspec` does a automatic identification of the levels, but sometimes it can
+get one level wrong. Usually, this happens when the energy levels of the right
+and the wrong levels are too similar.
+
+## Methodology
 
 This recipe explains how to check if the level of a spectral line is correct.
 
@@ -42,7 +54,7 @@ This recipe explains how to check if the level of a spectral line is correct.
 
    Note that the lower level identification has to be included.
 
-5. With thw lower and upper level indefied, open the file containing the
+5. With the lower and upper level identified, open the file containing the
    atomica data for the chemical element and ionization stage desired.
    It should be in a folder called `atdata`. In this file, the level are in
    ascending order.
@@ -51,11 +63,34 @@ This recipe explains how to check if the level of a spectral line is correct.
    `atdata\Si4_53lev.dat` and obtain the 13th and the 19th level:
 
    >2.10615573E+15     18.    5  **'SiIV 2Ge 1'**  0   0.  -105
-   
+
    >1.46223047E+15     22.    6  **'SiIV 2Ho 1'**  0   0.  -105
 
    And the levels are showed in boldface, i.e., the lower level is
-   `Si IV 2Ge 1` and the upper level is `SiIV 2Ho 1`.
+   `Si IV 2Ge 1` and the upper level is `SiIV 2Ho 1`. The last term ('1') means
+   that it is the the first level with the this term ( '2 Ge' for the lower
+   level and '2Ho' for the upper term.
 
-6. Go to NIST or look for a table of eletronic trasnsitions and check if the
+6. Go to NIST or look for a table of eletronic transitions and check if the
    wavelength of the desired line is correct.
+
+
+## The code
+
+The is two ways to run the code: as a script or as a python package. If you
+are using it as a script, just typing `./levelchecker` will print the
+documentation help. For the example above, you can type:
+
+```
+./levelchecker Si 4 4654.312
+```
+
+And it will print all the information explained above.
+
+If you want all levels you cant type without the specific wavelength, i.e.:
+
+```
+./levelchecker Si 4
+```
+
+The option to run as a python package is not functional at this point.
