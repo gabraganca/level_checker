@@ -81,3 +81,4 @@ levelchecker.check('Si', 4, 4116.104, '/home/user/synplot')
 
 
 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gabraganca/levelchecker/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
