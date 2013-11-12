@@ -5,6 +5,7 @@ Main module functions.
 import os
 import re
 import fnmatch
+import json
 
 
 def find(pattern, path):
@@ -46,8 +47,52 @@ def int2roman(number):
             number -= value
     return result
 
+def get_energy_levels(chem_element, ion, wave, spath):
+    """
+    Obtain the energy levels of a spectral line on the line list.
 
-def check(chem_element, ion, wave, spath, verbose=False):
+    Parameters
+    ----------
+
+    chem_element: str;
+        Chemical element,
+
+    ion: str;
+        Ionization stage in Arabic numerals.
+
+    wave: float, str;
+        Central wavelength.
+
+    spath: str;
+        Path to syn(spec|plot) root directory.
+        Usually it is `/home/user/synplot/`.
+    """
+    # Check if fort.19 is available. If it is, load it.
+    try:
+        fort19 = open(find('fort.19', spath)[0]).read()
+    except TypeError:
+        raise IOError('File fort.19 is not available.')
+
+    periodic = json.load(open(os.getenv('HOME') +
+                              '/.levelchecker/chemical_elements.json'))
+    # The wavelength in fort.19 is in nanometers
+    wave = float(wave)/10
+
+    # Get atomic number
+    atom = str(periodic[chem_element])
+
+    #The ion contuing on fort. starts from 0, being 0 the neutral atom.
+    ion = str(int(ion) - 1)
+
+    ptrn = '(' + str(wave) + '\d*)\s+(' + atom + '\.0' + ion + \
+           ').+\s(\d{4,}\.\d{3}).+\s(\d{4,}\.\d{3})'
+
+    wave_nm, atom_ion, low_energy, high_energy = re.findall(ptrn, fort19)[0]
+
+    return wave_nm, atom_ion, low_energy, high_energy
+
+
+def get_levels(chem_element, ion, wave, spath, verbose=False):
     """
     Parameters
     ----------
