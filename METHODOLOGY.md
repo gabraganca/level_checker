@@ -65,6 +65,17 @@ This recipe explains how to check if the level of a spectral line is correct.
    `Si IV 2Se 2` and the upper level is `SiIV 2Po 2`. The last term ('2') means
    that it is the the second level with this term ( '2 Se' for the lower
    level and '2Po' for the upper term.
+   
+   * Optional: Sometimes, NIST will not show the configuration terms in the same
+     way that is showed here. That is due to a different coupling mechanism. When this 
+     happens, one has to look for the energy levels on the line list (`fort.19` file).
+     The first column is the line wavelength in nanometers, the second is the atomic 
+     number of the chemical element plus the ionization stage (neutral is zero) and the 
+     fourth and sixth columns are the lower and upper energy respectively. For our example, 
+     we have:
+
+     >  411.6104 14.03 -0.110  **193978.891** 0.5  **218266.859** 0.5   0.00   0.00   0.00 0
+
 
 6. Go to [NIST](http://www.nist.gov/) or look for a table of eletronic
    transitions and check if the wavelength of the desired line is correct.
@@ -116,5 +127,7 @@ This recipe explains how to check if the level of a spectral line is correct.
    with the term `2Se` and we see from the above table that it is `2p6.45 2S`,
    in accordance with what we got on the Lines Form. The same line of thought
    can be made for the upper level. Thus, we can see that both levels are correct.
+   
+   Also note that the values of energy are the same found in step 5.
 
 
