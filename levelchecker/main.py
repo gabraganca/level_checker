@@ -47,7 +47,7 @@ def int2roman(number):
             number -= value
     return result
 
-def query_energy_levels(chem_element, ion, wave, spath):
+def get_energy_levels(chem_element, ion, wave, spath):
     """
     Obtain the energy levels of a spectral line on the line list.
 
@@ -92,7 +92,7 @@ def query_energy_levels(chem_element, ion, wave, spath):
     return wave_nm, atom_ion, low_energy, high_energy
 
 
-def check(chem_element, ion, wave, spath, verbose=False):
+def get_levels(chem_element, ion, wave, spath, verbose=False):
     """
     Parameters
     ----------

@@ -68,7 +68,7 @@ elif len(sys.argv) == 3:
 
     for wave in wavelengths:
         try:
-            lower, upper = lc.check(CHEM_ELEMENT, ION, wave, SPATH)
+            lower, upper = lc.get_levels(CHEM_ELEMENT, ION, wave, SPATH)
             print '{:.2f},{},{}'.format(wave, lower, upper)
         except (IOError, IndexError) as e:
             print '{:.2f},{}'.format(wave, e)
@@ -82,4 +82,4 @@ else:
     else:
         WAVE = int(WAVE)
 
-    lc.check(CHEM_ELEMENT, ION, WAVE, SPATH, True)
+    lc.get_levels(CHEM_ELEMENT, ION, WAVE, SPATH, True)
