@@ -63,4 +63,4 @@ This recipe explains how to check if the level of a spectral line is correct.
    wavelength of the desired line is correct.
 '''
 
-from main import check, find
+from main import find, int2roman, get_levels, get_energy_levels
