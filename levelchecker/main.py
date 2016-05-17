@@ -180,9 +180,10 @@ def get_levels(chem_element, ion, wave, spath, verbose=False):
     log.write('\nStep #5\n\n')
 
     try:
-        ptrn = chem_element.lower()+ion+'*'
-        atomic_data_file = find(ptrn, spath)[0]
+        ptrn = chem_element.lower()+ion+'*.dat'
+        atomic_data_file = find(ptrn, spath+r'atdata')[0]
         atomic_data = open(atomic_data_file).read().split('\n')
+        log.write('The atomic data file is {}\n\n'.format(atomic_data_file))
     except TypeError:
         raise IOError('There is no atomica data for this element and/or ' + \
                       'this ionization stage.')
@@ -190,8 +191,7 @@ def get_levels(chem_element, ion, wave, spath, verbose=False):
     real_lower_level = atomic_data[lower_level].split("'")[1]
     real_upper_level = atomic_data[upper_level].split("'")[1]
 
-    log.write('The atomic data file is {}\n\n'.format(atomic_data_file) + \
-              'The eletronic levels are:\n\n' +\
+    log.write('The eletronic levels are:\n\n' +\
               'Lower level: {}\n'.format(real_lower_level) + \
               'Upper level: {}'.format(real_upper_level))
 
